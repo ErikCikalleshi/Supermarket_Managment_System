@@ -30,6 +30,9 @@
             $sql->execute();
             $sql = $handler->prepare(" delete from Kunde where k_id = :id");
             $sql->bindParam(":id", $id);
+        }else if($_GET['action'] == "employee") {
+            $sql = $handler->prepare(" delete from Mitarbeiter where m_id = :id");
+            $sql->bindParam(":id", $id);
         }
         if ($sql->execute()) {
             $alert = "Removed";

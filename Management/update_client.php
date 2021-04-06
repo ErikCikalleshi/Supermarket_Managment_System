@@ -84,8 +84,6 @@ if (isset($_GET['id'])) {
 <?php
 if (isset($_POST['submit'])) {
     if ($_POST['submit'] == 'update') {
-        $alert = "drinn";
-        echo "<script type='text/javascript'>alert('$alert');</script>";
         try {
             $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
         } catch (Exception $e) {
