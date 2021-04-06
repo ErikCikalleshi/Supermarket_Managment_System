@@ -8,27 +8,31 @@ Diese Website soll das Verwaltungssystem eines Supermarktes simulieren. Die Seit
 
 ## Features
 
-Auf dieser Website kann man sich einen Account herstellen (sollte später für Kunden gedacht sein und den Online-Shop). Wenn man sich als Admin anmeldet, kann man fast ein ganzes Supermarket verwalten, wie z.B. neue Produkte hinzufüge, nachschauen wie viel Produkte noch in einem Lager übrig sind usw. Zudem hat man als Home-Seite ein Dashboard. 
+Sie können auf dieser Seite ein Konto anlegen (sollte später für Kunden und den Online-Shop sein). Wenn Sie sich als Administrator anmelden, können Sie fast alles in einem Supermarkt verwalten, z. B. neue Produkte hinzufügen, prüfen, wie viele Produkte noch auf Lager sind, usw. Außerdem hat man ein Dashboard als Startseite. 
 
+## Current Features
+* Sig-in and Login
+* Dashboard with Charts
+* Managment 
+  * Employee
+  * Item
+  * Stock
+  * Sales
+  * Client
+* Edit and delete tables
+* Change Password
+* Log Out
 
-## Running the Program
+## ER-Diagram
 
-Die jar-Datei sollte mit dem folgenden Befehl ausgeführt werden:
+![Er-Diagram]()
 
-```
-java --module-path {PATH_TO_FX_NUMBER/lib} --add-modules javafx.controls,javafx.fxml,javafx.base,javafx.graphics,javafx.web,javafx.swing -jar {PATH_TO_JAR}
-```
-**Reminder: JavaFx 15 und JDK 14 muss installiert sein**
-
-Um nachzuschauen, welche Version man auf dem Rechner installiert hat, führen Sie folgenden Befehl aus:
-```
-java -version
-```
 ## How to use
 
 Man muss nur das gewünschte Subnet und die Community eingeben. Die `Methode` ist standardmäsßig auf `Basic` eingestellt.
 
-![Scanning for Network](src/example.png)
+![Scanning for Network](er_modell.png)
+
 
 ### Features
 
