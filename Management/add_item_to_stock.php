@@ -68,6 +68,7 @@ if (!empty($_POST['selected_product']) and !empty($_POST['quantity']) and !empty
         $brand = (int)$_POST['brand'];
         $prod = (int)$_POST['selected_product'];
         $handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //its not allowed to add the same product in the same warehouse
         $sql = "insert into PF(pf_menge, f_f_id, f_p_id) SELECT :quant, :brand, :prod from DUAL where not exists(SELECT :brand, :prod from PF where f_f_id = :brand and f_p_id = :prod)";
 
     }
