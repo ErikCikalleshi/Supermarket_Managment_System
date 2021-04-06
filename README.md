@@ -25,13 +25,11 @@ Sie können auf dieser Seite ein Konto anlegen (sollte später für Kunden und d
 
 ## ER-Diagram
 
-![Er-Diagram]()
+![Er-Diagram](er_modell.png)
 
-## How to use
+## Homepage
 
-Man muss nur das gewünschte Subnet und die Community eingeben. Die `Methode` ist standardmäsßig auf `Basic` eingestellt.
-
-![Scanning for Network](er_modell.png)
+![Er-Diagram](first.gif)
 
 
 ### Features
