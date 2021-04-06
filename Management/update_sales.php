@@ -14,6 +14,9 @@
 </head>
 <body>
 <?php
+/**
+ * Load all the selected fields from the sales
+ */
 if (isset($_GET['id'])) {
     try {
         $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
@@ -153,7 +156,7 @@ if (isset($_POST['submit'])){
             echo "<script type='text/javascript'>alert('$alert');</script>";
         }
     }else if($_POST['submit'] == 'main'){
-        header("Location: logged_in.php");
+        header("Location: logged_in.php?choice=12");
     }
 
 }

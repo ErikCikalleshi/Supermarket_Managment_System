@@ -44,7 +44,9 @@
 </div>
 
 <?php
-
+/**
+ * create User with hashed Password
+ */
     if(!empty($_POST['fName']) and !empty($_POST['lName']) and !empty($_POST['username']) and !empty($_POST['pass']) and !empty($_POST['selected'])){
         $index = (int)$_POST['selected'];
         $sql = "insert into Benutzer(b_vorname, b_nachname, b_user, b_pass, b_rid) values (:fname, :lName, :username, :pass, :index)";

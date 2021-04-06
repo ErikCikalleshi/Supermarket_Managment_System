@@ -57,12 +57,6 @@ if (isset($_POST["login"])) {
     if (empty($_POST["username"]) && empty($_POST["password"])) {
         echo '<label>All fields are required</label>';
     } else {
-        /*try {
-            $handler = new PDO('mysql:dbname=db_login;host=localhost', $_POST['username'], $_POST['password']);
-        } catch (Exception $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }*/
         try {
             $handler = new PDO('mysql:dbname=db_login;host=localhost', 'root', '');
         } catch (Exception $e) {

@@ -24,18 +24,18 @@ if (!empty($_POST['username']) and !empty($_POST['pass'])) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
     }
+    //check if user is in the db
     $userToSearch = $_POST['username'];
     $sql = "select b_user, bid, b_pass from Benutzer where b_user = :username";
     $stmt = $handler->prepare($sql);
     $stmt->bindParam(':username', $userToSearch);
     $stmt->execute();
-
     $row = $stmt->fetch();
-    //check if user is in the db
 
     $id = $row["bid"];
     $username = $row['b_user'];
     $hashed_pass = $row['b_pass'];
+    //if password is correct with the hashed than start session and redirect to the logged screen
     if (password_verify($_POST['pass'], $hashed_pass)) {
         session_start();
         $_SESSION['userloggedin'] = true;

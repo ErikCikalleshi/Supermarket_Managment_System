@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+
 <?php
+/**
+ * Load all the selected fields from the warehouse
+ */
 if (isset($_GET['id'])) {
     try {
         $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
@@ -97,8 +101,6 @@ if(isset($_POST['submit'])){
         $quant = (int)$_POST['quantity'];
         $brand = (int)$_POST['brand'];
         $prod = (int)$_POST['selected_product'];
-        $alert = $quant ." " . $brand . " ". $prod;
-        echo "<script type='text/javascript'>alert('$alert');</script>";
         $handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "update pf set pf_menge = :quant, f_f_id = :brand, f_p_id = :prod where pf_id = ". $id;
         $stmt = $handler->prepare($sql);
@@ -117,7 +119,7 @@ if(isset($_POST['submit'])){
             echo "<script type='text/javascript'>alert('$alert');</script>";
         }
     }else if ($_POST['submit'] == 'back') {
-        header("Location: logged_in.php");
+        header("Location: logged_in.php?choice=6");
     }
 }
 ?>

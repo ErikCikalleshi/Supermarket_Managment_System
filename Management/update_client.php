@@ -14,6 +14,9 @@
 </head>
 <body>
 <?php
+/**
+ * Load all the selected fields from the client
+ */
 if (isset($_GET['id'])) {
     try {
         $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
