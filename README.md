@@ -29,39 +29,10 @@ Sie können auf dieser Seite ein Konto anlegen (sollte später für Kunden und d
 
 ## Homepage
 
-![Er-Diagram](first.gif)
+![Homepage](first.gif)
 
 
-### Features
+## Management
 
-#### Input
+![Homepage](second.gif)
 
-![Scan](src/1Schreibweise.png)
-![Scan](src/2Schreibweise.png)
-![Scan](src/3Schreibweise.png)
-
-#### Load Own Files
-
-![File](src/File.png)
-
-#### Method
-
-![File](src/SelectGet.png)
-
-#### Mibs or Oids
-
-![Mibs](src/ShowMib.gif)
-
-
-## Trap Listener
-
-Um den Listener zu starten müssen sie auf `Start/Stop` klicken und den gewünschten Port eingeben.
-![Trap](src/GetTrap.png)
-
-Leider auf Windows sind Traps schwerer weiterzuleiten, als in Linux. Aber glücklicherweise kann man mit den Tool von [iReasoning](https://www.ireasoning.com/) Traps weiterleiten. 
-
-### Send Trap
-
-Unter `Tools` kann man den `Trap Sender` finden.
-
-![SendTrap](src/SendTrap.png)
