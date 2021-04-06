@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-4">
             <label for="validationCustom02" class="form-label">Last name</label>
-            <input name="lName"style="width: 238.55px" type="text" class="form-control" id="validationCustom02" value="123" required>
+            <input name="lName" style="width: 238.55px" type="text" class="form-control" id="validationCustom02" value="123" required>
         </div>
         <div class="col-md-4">
             <label for="validationCustomUsername" class="form-label">Username</label>
@@ -32,7 +32,7 @@
                 $sql->execute();
                 $i = 1;
                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)){
-                    echo '<option class="dropdown-item" type="button" value="'.$i.'">'.$result['r_sqluser'].'</option>';
+                    echo '<option class="dropdown-item" value="'.$i.'">'.$result['r_sqluser'].'</option>';
                     $i++;
                 }
             ?>

@@ -94,7 +94,7 @@ if (isset($_GET['id'])) {
                 $sql = $handler->prepare("Select * FROM Filiale where f_id = " . $result['f_f_id']);
                 $sql->execute();
                 $res = $sql->fetch(PDO::FETCH_ASSOC);
-                echo '<option value="'. $res['f_id'].'" class= "dropdown-item" type="button" selected>' . $res['f_name'] . '</option>';
+                echo '<option value="'. $res['f_id'].'" class= "dropdown-item" selected>' . $res['f_name'] . '</option>';
                 $sql = $handler->prepare("Select * FROM Filiale");
                 $sql->execute();
                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {

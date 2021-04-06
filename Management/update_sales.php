@@ -47,11 +47,11 @@ if (isset($_GET['id'])) {
                 $sql = $handler->prepare("Select * FROM Kunde where k_id = " . $k_id);
                 $sql->execute();
                 $res = $sql->fetch(PDO::FETCH_ASSOC);
-                echo '<option value="'. $res['k_id'].'" class= "dropdown-item" type="button" selected>' . $res['k_id'].': '. $res['k_vorname'] .' '. $res['k_nachname'] .'</option>';
+                echo '<option value="'. $res['k_id'].'" class= "dropdown-item"  selected>' . $res['k_id'].': '. $res['k_vorname'] .' '. $res['k_nachname'] .'</option>';
                 $sql = $handler->prepare("Select k_id, k_vorname, k_nachname FROM Kunde");
                 $sql->execute();
                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<option class="dropdown-item" type="button" value="' . $result['k_id'] . '">' . $result['k_id'] . ': ' . $result['k_nachname'] . ' ' . $result['k_vorname'] . '</option>';
+                    echo '<option class="dropdown-item"  value="' . $result['k_id'] . '">' . $result['k_id'] . ': ' . $result['k_nachname'] . ' ' . $result['k_vorname'] . '</option>';
                 }
                 ?>
             </select>
@@ -73,7 +73,7 @@ if (isset($_GET['id'])) {
 
                 $res = $sql->fetch(PDO::FETCH_ASSOC);
                 $price = (string) $res['p_preis'];
-                echo '<option value="'. $res['p_id'].'" class= "dropdown-item" type="button" selected>' . $res['p_name'] . '</option>';
+                echo '<option value="'. $res['p_id'].'" class= "dropdown-item"  selected>' . $res['p_name'] . '</option>';
 
                 ?>
             </select>
@@ -105,11 +105,11 @@ if (isset($_GET['id'])) {
                 $sql = $handler->prepare("Select * FROM Filiale where f_id = " . $f_id);
                 $sql->execute();
                 $res = $sql->fetch(PDO::FETCH_ASSOC);
-                echo '<option value="'. $res['f_id'].'" class= "dropdown-item" type="button" selected>' . $res['f_name'] . '</option>';
+                echo '<option value="'. $res['f_id'].'" class= "dropdown-item" selected>' . $res['f_name'] . '</option>';
                 $sql = $handler->prepare("Select * FROM Filiale");
                 $sql->execute();
                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<option class="dropdown-item" type="button" value="' . $result['f_id'] . '">' . $result['f_name'] . '</option>';
+                    echo '<option class="dropdown-item" value="' . $result['f_id'] . '">' . $result['f_name'] . '</option>';
                 }
                 ?>
             </select>

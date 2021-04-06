@@ -64,7 +64,7 @@
                 $sql = $handler->prepare("Select * FROM Filiale");
                 $sql->execute();
                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<option class="dropdown-item" type="button" value="' . $result['f_id'] . '">' . $result['f_name'] .'</option>';
+                    echo '<option class="dropdown-item" value="' . $result['f_id'] . '">' . $result['f_name'] .'</option>';
                 }
                 ?>
             </select>

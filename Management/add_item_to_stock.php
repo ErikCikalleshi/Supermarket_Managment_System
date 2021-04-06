@@ -50,8 +50,6 @@
         </div>
 
         <button type="submit" class="btn btn-primary" name="submit" value="save" style="margin-top: 10px">Save</button>
-        <button type="submit" class="btn btn-primary" name="submit" value="update" style="margin-top: 10px">Update
-        </button>
 
     </form>
 
@@ -72,11 +70,6 @@ if (!empty($_POST['selected_product']) and !empty($_POST['quantity']) and !empty
         $handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "insert into PF(pf_menge, f_f_id, f_p_id) SELECT :quant, :brand, :prod from DUAL where not exists(SELECT :brand, :prod from PF where f_f_id = :brand and f_p_id = :prod)";
 
-    } else if ($_POST['submit'] == 'update') {
-        $quant = (int)$_POST['quantity'];
-        $brand = (int)$_POST['brand'];
-        $prod = (int)$_POST['selected'];
-        $sql = "update PF set pf_menge = :quant where f_f_id = :brand and f_p_id = :prod";
     }
     $stmt = $handler->prepare($sql);
     $stmt->bindParam(':quant', $param_quantity, PDO::PARAM_INT);

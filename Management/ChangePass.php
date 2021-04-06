@@ -3,11 +3,11 @@
     <form action="logged_in.php?choice=5" method="post">
         <div class="col-md-4">
             <label for="validationCustom01" class="form-label">Old_Password</label>
-            <input name="oPassword" style="width: 238.55px" type="text" class="form-control" id="validationCustom01" value="Test" required>
+            <input name="oPassword" style="width: 239px" type="text" class="form-control" id="validationCustom01" value="Test" required>
         </div>
         <div class="col-md-4">
             <label for="validationCustom02" class="form-label">New_Password</label>
-            <input name="nPassword"style="width: 238.55px" type="text" class="form-control" id="validationCustom02" value="123" required>
+            <input name="nPassword"style="width: 239px" type="text" class="form-control" id="validationCustom02" value="123" required>
         </div>
         <div class="col-12" style="margin-top: 10px">
             <input class="btn btn-primary" type="submit"/>

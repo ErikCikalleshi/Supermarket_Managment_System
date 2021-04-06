@@ -73,7 +73,7 @@
 
         </div>
 
-        <button type="submit" class="btn btn-primary" name="submit" value="save" style="margin-top: 10px">+</button>
+        <button type="submit" class="btn btn-primary" name="submit" value="save" style="margin-top: 10px">Add</button>
 
     </form>
 
@@ -89,14 +89,11 @@ if (!empty($_POST['selected_product']) and !empty($_POST['selected_client']) and
     }
 
     if ($_POST['submit'] == 'save') {
-        echo "nice";
         $quant = (int)$_POST['quantity'];
         $brand = (int)$_POST['brand'];
         $client = (int)$_POST['selected_client'];
         $split = explode("|",$_POST['selected_product']);
         $prod = (int)$split[0];
-        $alert = $client. " ". $prod . " ". $quant. " ". $brand;
-        echo "<script type='text/javascript'>alert('$alert');</script>";
         $sql = "insert into Verkauft(v_tag, v_menge, f_k_id, f_p_id, f_f_id) VALUES (now(), :quant, :client, :prod, :brand);";
 
     }

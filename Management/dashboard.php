@@ -198,7 +198,7 @@
                             print "Error!: " . $e->getMessage() . "<br/>";
                             die();
                         }
-                        ;
+
                         $sql = $handler->prepare('select f_name, sum(v_menge * p_preis) as "Cash" from Verkauft, Filiale, Produkt where f_id = Verkauft.f_f_id and f_p_id = Produkt.p_id group by f_f_id order by `Cash` desc');
                         $sql->execute();
                         while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
