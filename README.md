@@ -20,50 +20,24 @@ Sie können auf dieser Seite ein Konto anlegen (sollte später für Kunden und d
   * Sales
   * Client
 * Edit and delete tables
+* Charts
+* Sort-Tables
 * Change Password
 * Log Out
 
 ## ER-Diagram
 
-![Er-Diagram]()
+![Er-Diagram](er_modell.png)
 
-## How to use
+## Homepage
 
-Man muss nur das gewünschte Subnet und die Community eingeben. Die `Methode` ist standardmäsßig auf `Basic` eingestellt.
-
-![Scanning for Network](er_modell.png)
+![Homepage](first.gif)
 
 
-### Features
+## Management
 
-#### Input
+![Homepage](second.gif)
 
-![Scan](src/1Schreibweise.png)
-![Scan](src/2Schreibweise.png)
-![Scan](src/3Schreibweise.png)
+## Problems
 
-#### Load Own Files
-
-![File](src/File.png)
-
-#### Method
-
-![File](src/SelectGet.png)
-
-#### Mibs or Oids
-
-![Mibs](src/ShowMib.gif)
-
-
-## Trap Listener
-
-Um den Listener zu starten müssen sie auf `Start/Stop` klicken und den gewünschten Port eingeben.
-![Trap](src/GetTrap.png)
-
-Leider auf Windows sind Traps schwerer weiterzuleiten, als in Linux. Aber glücklicherweise kann man mit den Tool von [iReasoning](https://www.ireasoning.com/) Traps weiterleiten. 
-
-### Send Trap
-
-Unter `Tools` kann man den `Trap Sender` finden.
-
-![SendTrap](src/SendTrap.png)
+Geplant wäre eine Kunden-Seite, auf der er alle Produkte in einem Katalog sehen und in den Warenkorb legen kann, dann auch eine Zahlungsmethode auswählen kann. Für diese zusätzliche Funktion würde es jedoch zu viel gegebene Zeit überspringen.
