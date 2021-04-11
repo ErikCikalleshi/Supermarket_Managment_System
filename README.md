@@ -40,4 +40,4 @@ Sie können auf dieser Seite ein Konto anlegen (sollte später für Kunden und d
 
 ## Problems
 
-Geplant wäre eine Kunden-Seite, auf der er alle Produkte in einem Katalog sehen und in den Warenkorb legen kann, dann auch eine Zahlungsmethode auswählen kann... Für diese zusätzliche Funktion würde es jedoch zu viel gegebene Zeit überspringen.
+Geplant wäre eine Kunden-Seite, auf der er alle Produkte in einem Katalog sehen und in den Warenkorb legen kann, dann auch eine Zahlungsmethode auswählen kann. Für diese zusätzliche Funktion würde es jedoch zu viel gegebene Zeit überspringen.
