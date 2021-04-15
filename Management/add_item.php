@@ -51,6 +51,7 @@
 
         $pr = (double)$_POST["price"];
         $sql = "insert into Produkt(p_name, p_typ, p_marke, p_preis, p_besch) VALUES (:name, :type, :brand, :pr, :desc)";
+
         $stmt = $handler->prepare($sql);
         $stmt->bindParam(':name', $param_name, PDO::PARAM_STR);
         $stmt->bindParam(':type', $param_type, PDO::PARAM_STR);
@@ -64,7 +65,10 @@
         $param_desc = $_POST["desc"];
         $param_brand = $_POST["brand"];
 
-        if(!$stmt->execute()){
+        if ($stmt->execute()) {
+            $alert = "Your Item was added";
+            echo "<script type='text/javascript'>alert('$alert');</script>";
+        } else {
             $alert = "I am sorry! There was some error. Try again please.";
             echo "<script type='text/javascript'>alert('$alert');</script>";
         }

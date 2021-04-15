@@ -94,8 +94,8 @@ if (!empty($_POST['selected_product']) and !empty($_POST['selected_client']) and
         $client = (int)$_POST['selected_client'];
         $split = explode("|",$_POST['selected_product']);
         $prod = (int)$split[0];
-        $sql = "insert into Verkauft(v_tag, v_menge, f_k_id, f_p_id, f_f_id) VALUES (now(), :quant, :client, :prod, :brand);";
-
+        //$sql = "insert into Verkauft(v_tag, v_menge, f_k_id, f_p_id, f_f_id) VALUES (now(), :quant, :client, :prod, :brand);";
+        $sql = "CALL insert_sales(:quant, :brand, :prod, :client)";
     }
     $stmt = $handler->prepare($sql);
     $stmt->bindParam(':quant', $param_quantity, PDO::PARAM_INT);
@@ -109,7 +109,7 @@ if (!empty($_POST['selected_product']) and !empty($_POST['selected_client']) and
     $param_product = (int)$split[0];
 
     if ($stmt->execute()) {
-        $alert = "Your Item was added into the Stock";
+        $alert = "Your Item was added into the Sales";
         echo "<script type='text/javascript'>alert('$alert');</script>";
     } else {
         $alert = "I am sorry! There was some error. Try again please.";
@@ -149,7 +149,7 @@ if (!empty($_POST['selected_product']) and !empty($_POST['selected_client']) and
             echo '<td>' . $result['v_id'] . '</td>';
             echo '<td>' . $result['f_k_id'] . '</td>';
             echo '<td>' . $result['p_name'] . '</td>';
-            echo '<td>' . $result['p_preis'] . '</td>';
+            echo '<td>' . $result['p_preis'] . '€</td>';
             echo '<td>' . $result['v_menge'] . '</td>';
             echo '<td>' . $result['Total Cost'] . '€</td>';
             echo "</tr>";

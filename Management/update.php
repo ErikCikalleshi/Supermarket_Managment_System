@@ -25,7 +25,6 @@ if(isset($_GET['id'])){
         die();
     }
     $id = $_GET['id'];
-    echo $id;
     $stmt = $handler->prepare("Select * FROM Produkt where p_id =". $_GET['id']);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -47,7 +46,7 @@ if(isset($_GET['id'])){
             <input type="text" class="form-control" name="price" placeholder="0.99" aria-label="Price" aria-describedby="basic-addon1" value="<?php echo $result['p_preis'] ?>"required>
         </div>
         <div class="input-group mb-3">
-            <select class="form-select" aria-label="Default select example" name="type" style="width: 100%">
+            <select class="form-select" aria-label="Default select example" name="type" style="width: 100%" required>
                 <option selected><?php echo $result['p_typ']?></option>
                 <option value="Vegetables">Vegetables</option>
                 <option value="Fruits">Fruits</option>
@@ -77,14 +76,13 @@ if(isset($_GET['id'])){
 <?php
     if(isset($_POST['submit'])) {
         if ($_POST['submit'] == 'update') {
-            if (!empty($_POST['name']) and !empty($_POST['price']) and !empty($_POST['brand']) and !empty($_POST['type']) and !empty($_POST['desc'])) {
+            if (!empty($_POST['name']) and !empty($_POST['price']) and !empty($_POST['brand']) and !empty($_POST['type'])) {
                 try {
                     $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
                 } catch (Exception $e) {
                     print "Error!: " . $e->getMessage() . "<br/>";
                     die();
                 }
-                echo $_POST['desc'];
                 $pr = (double)$_POST["price"];
                 $sql = "update produkt set p_name = :name, p_preis = :pr, p_besch = :desc, p_typ = :type, p_marke = :brand where p_id =". $_GET['id'];
                 $stmt = $handler->prepare($sql);

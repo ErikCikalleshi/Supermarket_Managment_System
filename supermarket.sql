@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 08, 2021 alle 08:47
+-- Creato il: Apr 15, 2021 alle 20:11
 -- Versione del server: 10.4.14-MariaDB
 -- Versione PHP: 7.4.10
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `supermarket`
 --
+
+DELIMITER $$
+--
+-- Procedure
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_sales` (IN `menge` INT, `f_id` INT, `p_id` INT, `k_id` INT)  begin
+    IF EXISTS(select * from PF where f_f_id = f_id and p_id = f_p_id and pf_menge >= menge) THEN
+        insert into Verkauft(v_tag, v_menge, f_k_id, f_p_id, f_f_id) VALUES (now(), menge, k_id, p_id, f_id);
+    ELSE
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'The Product doesn`t exist';
+    end if;
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_stock` (IN `menge` INT, `f_id` INT, `p_id` INT)  begin
+    IF EXISTS(select * from PF where f_f_id = f_id and p_id = f_p_id) THEN
+        update pf set pf_menge = pf_menge + menge where f_f_id = f_id and p_id = f_p_id;
+    ELSE
+        insert into PF(pf_menge, f_f_id, f_p_id) values (menge, f_id,p_id);
+    end if;
+end$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -49,13 +72,13 @@ INSERT INTO `filiale` (`f_id`, `f_ort`, `f_name`) VALUES
 
 CREATE TABLE `kunde` (
   `k_id` int(11) NOT NULL,
-  `k_vorname` varchar(40) DEFAULT NULL,
-  `k_nachname` varchar(40) DEFAULT NULL,
-  `k_karteaddr` double DEFAULT NULL,
-  `k_email` varchar(40) DEFAULT NULL,
-  `k_phone` mediumtext DEFAULT NULL,
-  `k_adresse` varchar(40) DEFAULT NULL,
-  `k_plz` int(11) DEFAULT NULL
+  `k_vorname` varchar(40) NOT NULL,
+  `k_nachname` varchar(40) NOT NULL,
+  `k_karteaddr` double NOT NULL,
+  `k_email` varchar(40) NOT NULL,
+  `k_phone` mediumtext NOT NULL,
+  `k_adresse` varchar(40) NOT NULL,
+  `k_plz` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -63,8 +86,7 @@ CREATE TABLE `kunde` (
 --
 
 INSERT INTO `kunde` (`k_id`, `k_vorname`, `k_nachname`, `k_karteaddr`, `k_email`, `k_phone`, `k_adresse`, `k_plz`) VALUES
-(1, 'Erik', 'Cikalleshi', 2321616516, 'erik.ck@outlook.it', '215', 'Stadelgasse 17', 39042),
-(12, 'Gabriel', 'Cikalleshi', 4595891650210, 'gabri@outlook.it', '3271938871', 'Via Fienili 16', 39042);
+(1, 'Gabriel', 'Cikalleshi', 4595891650210, 'gabri@outlook.it', '3271938863', 'Via Fienili 16', 39042);
 
 -- --------------------------------------------------------
 
@@ -90,7 +112,8 @@ CREATE TABLE `mitarbeiter` (
 --
 
 INSERT INTO `mitarbeiter` (`m_id`, `m_gehalt`, `m_vorname`, `m_nachname`, `m_adresse`, `m_iban`, `m_phone`, `m_plz`, `m_email`, `f_f_id`) VALUES
-(3, 2500, 'Max', 'Mustermann', 'Via Fienili 17', 'IT1545453210153', '3213245843', 39042, 'maxmustermann@gmail.com', 1);
+(1, 3000, 'TestArbeiter', 'Test123', 'Via Fienili 16', 'IT1545453210153', '32423454364', 39042, 'test@outlook.it', 1),
+(3, 2000, 'Max', 'Mustermann', 'Dantestraße 16', 'IT1545453210169', '398', 39042, 'max@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -110,12 +133,10 @@ CREATE TABLE `pf` (
 --
 
 INSERT INTO `pf` (`pf_id`, `pf_menge`, `f_f_id`, `f_p_id`) VALUES
-(1, 20, 1, 2),
-(2, -69, 1, 1),
-(5, 80, 2, 7),
-(6, 12, 1, 4),
-(7, 100, 1, 5),
-(12, 100, 2, 1);
+(1, 360, 1, 1),
+(16, 100, 1, 2),
+(17, 20, 2, 2),
+(19, 0, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -137,11 +158,9 @@ CREATE TABLE `produkt` (
 --
 
 INSERT INTO `produkt` (`p_id`, `p_name`, `p_typ`, `p_marke`, `p_preis`, `p_besch`) VALUES
-(1, 'Nutella', 'Creme', 'Ferrero', 1.99, 'Nussschocko'),
-(2, 'Almdudler', 'Beverages', 'Almdudler', 2.09, 'Beverages'),
-(4, 'Cola', 'Beverages', 'Cola', 0.99, 'Cola'),
-(5, 'Barilla', 'Grains, Pasta & Sides', 'Pasta', 2.99, 'Pasta'),
-(7, 'Bravo Orange', 'Beverages', 'Bravo', 1.49, 'Bravo');
+(1, 'Nutella', 'Creme', 'Ferrero', 1.99, 'Schocko'),
+(2, 'Almdudler', 'Getränk', 'Almdudler', 2.09, 'Getränk'),
+(3, 'RedBull', 'Getränk', 'Wings', 1.25, 'Getränk');
 
 -- --------------------------------------------------------
 
@@ -163,12 +182,9 @@ CREATE TABLE `verkauft` (
 --
 
 INSERT INTO `verkauft` (`v_id`, `v_tag`, `v_menge`, `f_k_id`, `f_p_id`, `f_f_id`) VALUES
-(10, '2021-04-05 19:29:23', 100, 1, 2, 1),
-(11, '2021-04-06 15:02:28', 100, 1, 2, 2),
-(14, '2021-04-06 15:02:50', 100, 1, 1, 2),
-(17, '2021-04-06 15:20:03', 31, 1, 4, 2),
-(18, '2021-04-06 18:34:55', 35, 1, 1, 1),
-(19, '2021-04-06 18:38:31', 35, 12, 1, 1);
+(1, '2021-04-15 17:33:44', 25, 1, 1, 1),
+(7, '2021-04-15 17:57:24', 20, 1, 3, 1),
+(9, '2021-04-15 18:04:18', 5, 1, 3, 1);
 
 --
 -- Trigger `verkauft`
@@ -206,6 +222,7 @@ ALTER TABLE `kunde`
 --
 ALTER TABLE `mitarbeiter`
   ADD PRIMARY KEY (`m_id`),
+  ADD UNIQUE KEY `m_iban` (`m_iban`),
   ADD UNIQUE KEY `m_email` (`m_email`),
   ADD UNIQUE KEY `m_phone` (`m_phone`) USING HASH,
   ADD KEY `f_f_id` (`f_f_id`);
@@ -242,13 +259,13 @@ ALTER TABLE `verkauft`
 -- AUTO_INCREMENT per la tabella `filiale`
 --
 ALTER TABLE `filiale`
-  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `kunde`
 --
 ALTER TABLE `kunde`
-  MODIFY `k_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `k_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `mitarbeiter`
@@ -260,19 +277,19 @@ ALTER TABLE `mitarbeiter`
 -- AUTO_INCREMENT per la tabella `pf`
 --
 ALTER TABLE `pf`
-  MODIFY `pf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `pf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT per la tabella `produkt`
 --
 ALTER TABLE `produkt`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `verkauft`
 --
 ALTER TABLE `verkauft`
-  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Limiti per le tabelle scaricate

@@ -68,9 +68,9 @@ if (!empty($_POST['selected_product']) and !empty($_POST['quantity']) and !empty
         $brand = (int)$_POST['brand'];
         $prod = (int)$_POST['selected_product'];
         $handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //its not allowed to add the same product in the same warehouse
-        $sql = "insert into PF(pf_menge, f_f_id, f_p_id) SELECT :quant, :brand, :prod from DUAL where not exists(SELECT :brand, :prod from PF where f_f_id = :brand and f_p_id = :prod)";
-
+        //its not allowed to add the same product twice in the same warehouse
+        //$sql = "insert into PF(pf_menge, f_f_id, f_p_id) SELECT :quant, :brand, :prod from DUAL where not exists(SELECT :brand, :prod from PF where f_f_id = :brand and f_p_id = :prod)";
+        $sql = "CALL update_stock(:quant, :brand, :prod)";
     }
     $stmt = $handler->prepare($sql);
     $stmt->bindParam(':quant', $param_quantity, PDO::PARAM_INT);
@@ -80,6 +80,7 @@ if (!empty($_POST['selected_product']) and !empty($_POST['quantity']) and !empty
     $param_quantity = (int)$_POST['quantity'];
     $param_brand = (int)$_POST['brand'];
     $param_product = (int)$_POST['selected_product'];
+
     if ($stmt->execute()) {
         $alert = "Your Item was added into the Stock";
         echo "<script type='text/javascript'>alert('$alert');</script>";
