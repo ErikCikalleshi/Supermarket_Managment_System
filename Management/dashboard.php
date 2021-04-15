@@ -335,8 +335,7 @@
                             print "Error!: " . $e->getMessage() . "<br/>";
                             die();
                         }
-
-                        $sql = $handler->prepare('select k_id, k_nachname, k_vorname, count(*) as Count from Kunde, Verkauft where f_k_id = Kunde.k_id group by f_k_id order by `Count` DESC');
+                        $sql = $handler->prepare('select k_id, k_nachname, k_vorname, sum(v_menge * p_preis) as Cost from Kunde, Verkauft, Produkt where k_id = Verkauft.f_k_id and p_id = f_p_id group by k_id order by Cost desc;');
                         $sql->execute();
                         while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
                             echo "'(" . $result['k_id'] . ')'. $result['k_nachname']. ' '. $result['k_vorname'] . "',";
