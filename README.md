@@ -27,7 +27,7 @@ Sie können auf dieser Seite ein Konto anlegen (sollte später für Kunden und d
 
 ## Dynamic Features
 * Update quantity of warehouse when selling
-* Add automatically the product in the warehouse if the product already exists in the warehouse
+* Add automatically the quantity of the product in the warehouse if the product already exists
 * Add sales if the product exists and the product is in the selected brand and check if the warehouse has enough to sell the product
 
 ## ER-Diagram
