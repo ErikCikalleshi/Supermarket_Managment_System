@@ -19,7 +19,7 @@
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
 
     // the following tells PDO we want it to throw Exceptions for every error.
     // this is far more useful than the default mode of throwing php errors

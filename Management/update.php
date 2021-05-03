@@ -23,7 +23,7 @@ if(isset($_GET['id'])){
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
     $id = $_GET['id'];
     $stmt = $handler->prepare("Select * FROM Produkt where p_id =". $_GET['id']);
     $stmt->execute();
@@ -31,7 +31,7 @@ if(isset($_GET['id'])){
 }
 ?>
 <div class="box2">
-    <form action=<?php echo 'update.php?id='.$id ?> method="post">
+    <form action=<?php echo 'update.php?id='.$id ?> method="post" enctype="multipart/form-data">
         <h1>Update Item</h1>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Product Name</span>
@@ -68,6 +68,11 @@ if(isset($_GET['id'])){
         <div class="form-floating">
             <textarea class="form-control" name="desc" placeholder="<?php echo $result['p_besch']?>" style="height: 100px"></textarea>
         </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Import Image</span>
+            <input type="file" class="form-control" name="image" >
+        </div>
+
         <button type="submit" class="btn btn-primary" name="submit" value="update" style="margin-top: 10px">Update</button>
         <button type="submit" class="btn btn-primary" name="submit" value="discard" style="margin-top: 10px">Back to main</button>
     </form>
@@ -84,30 +89,64 @@ if(isset($_GET['id'])){
                     die();
                 }
                 $pr = (double)$_POST["price"];
-                $sql = "update produkt set p_name = :name, p_preis = :pr, p_besch = :desc, p_typ = :type, p_marke = :brand where p_id =". $_GET['id'];
+                $isImage = false;
+                $fileName = $_FILES["image"]["name"];
+                $type = $_FILES["image"]["type"];
+                $size = $_FILES["image"]["size"];
+                $target_dir = "..\..\media";
+                $targetFilePath = $target_dir . $fileName;
+                list($width, $height) = getimagesize($_FILES["image"]["tmp_name"]);
+
+                $alert = $width;
+                echo "<script type='text/javascript'>alert('$alert');</script>";
+
+
+                $sql = "update produkt set p_name = :name, p_preis = :pr, p_besch = :desc, p_typ = :type, p_marke = :brand, p_image = :fileName where p_id =". $_GET['id'];
                 $stmt = $handler->prepare($sql);
                 $stmt->bindParam(':name', $param_name, PDO::PARAM_STR);
                 $stmt->bindParam(':type', $param_type, PDO::PARAM_STR);
                 $stmt->bindParam(':brand', $param_brand, PDO::PARAM_STR);
                 $stmt->bindParam(':pr', $param_pr, PDO::PARAM_STR);
                 $stmt->bindParam(':desc', $param_desc, PDO::PARAM_STR);
+                $stmt->bindParam(':fileName', $param_img, PDO::PARAM_STR);
+
+                if($type == "image/jpg" || $type == "image/jpeg" || $type == "image/png" || $type == "image/gif"){
+                    if($width <= 600){
+                        if($size < 5000000){
+                            move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath);
+                            $isImage = true;
+                        }else{
+                            $alert = "Your File is too large. Over 5MB.";
+                            echo "<script type='text/javascript'>alert('$alert');</script>";
+                        }
+                    }else{
+                        $alert = "Image must smaller than 600x600";
+                        echo "<script type='text/javascript'>alert('$alert');</script>";
+                    }
+                }else{
+                    $alert = "Format Image not supported";
+                    echo "<script type='text/javascript'>alert('$alert');</script>";
+                }
 
                 $param_name = $_POST["name"];
                 $param_type = $_POST["type"];
                 $param_pr = $_POST["price"];
                 $param_desc = $_POST["desc"];
                 $param_brand = $_POST["brand"];
+                $param_img = $fileName;
 
-                if (!$stmt->execute()) {
-                    $alert = "I am sorry! There was some error. Try again please.";
-                    echo "<script type='text/javascript'>alert('$alert');</script>";
-                }else{
-                    $alert = "Successfull";
-                    echo "<script type='text/javascript'>alert('$alert');</script>";
+                if($isImage){
+                    if (!$stmt->execute()) {
+                        $alert = "I am sorry! There was some error. Try again please.";
+                        echo "<script type='text/javascript'>alert('$alert');</script>";
+                    }else{
+                        $alert = "Successful";
+                        echo "<script type='text/javascript'>alert('$alert');</script>";
+                    }
                 }
             }
         } else if($_POST['submit'] == 'discard'){
-            header("Location: logged_in.php");
+            header("Location: logged_in.php?choice=4");
         }
     }
 

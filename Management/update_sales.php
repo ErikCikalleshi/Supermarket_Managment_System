@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
     $id = $_GET['id'];
 
     $stmt = $handler->prepare("Select * FROM Verkauft where v_id =" . $_GET['id']);
@@ -180,12 +180,12 @@ if (isset($_POST['submit'])){
         </thead>
         <tbody>
         <?php
-        try {
-            $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
-        } catch (Exception $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+    try {
+        $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
+    } catch (Exception $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    };
 
         $sql = $handler->prepare('select v_id, f_k_id, p_name, f_name, p_preis, v_menge, sum(p_preis * v_menge) as "Total Cost" from Kunde, Verkauft, Produkt,  Filiale where f_k_id = Kunde.k_id and f_p_id = Produkt.p_id and f_f_id = f_id group by v_id');
         $sql->execute();

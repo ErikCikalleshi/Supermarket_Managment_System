@@ -6,9 +6,11 @@
         <th scope="col">Type</th>
         <th scope="col">Cost</th>
         <th scope="col">Description</th>
+        <th scope="col">Image</th>
         <th scope="col">Action</th>
     </tr>
     </thead>
+ 
     <tbody>
     <?php
     try {
@@ -16,7 +18,7 @@
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
 
     // the following tells PDO we want it to throw Exceptions for every error.
     // this is far more useful than the default mode of throwing php errors
@@ -32,6 +34,9 @@
         echo '<td>' . $result['p_typ'] . '</td>';
         echo '<td>' . $result['p_preis'] . '€</td>';
         echo '<td>' . $result['p_besch'] . '</td>';
+        $dir = "..\..\media";
+        $imagePath = $dir . $result['p_image'];
+        echo '<td><img src="' . $imagePath. '" alt = "" width="200" height="200"></td>';
         echo '<td>';
         echo "<a href='update.php?id={$result['p_id']}' class='btn btn-primary m-r-1em'>Edit</a>";
         echo "<button type='button' onclick='delete_user({$result['p_id']});' class='btn btn-danger'>Delete</button>";

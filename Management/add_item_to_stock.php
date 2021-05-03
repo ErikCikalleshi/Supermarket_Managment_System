@@ -61,7 +61,7 @@ if (!empty($_POST['selected_product']) and !empty($_POST['quantity']) and !empty
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
 
     if ($_POST['submit'] == 'save') {
         $quant = (int)$_POST['quantity'];
@@ -108,12 +108,12 @@ if (!empty($_POST['selected_product']) and !empty($_POST['quantity']) and !empty
         </thead>
         <tbody>
         <?php
-        try {
-            $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
-        } catch (Exception $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+    try {
+        $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
+    } catch (Exception $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    };
 
         // the following tells PDO we want it to throw Exceptions for every error.
         // this is far more useful than the default mode of throwing php errors

@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
     $id = $_GET['id'];
 
     $stmt = $handler->prepare("Select * FROM PF where pf_id =" . $_GET['id']);

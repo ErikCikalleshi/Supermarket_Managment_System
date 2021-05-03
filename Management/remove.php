@@ -4,7 +4,7 @@
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
     $sql = null;
     if(isset($_GET['choice']) and isset($_GET['action'])){
         $id = $_GET['choice'];

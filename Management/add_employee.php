@@ -76,12 +76,13 @@
 
 <?php
 if (!empty($_POST['e_name']) and !empty($_POST['e_sur']) and !empty($_POST['e_phone']) and !empty($_POST['e_email']) and !empty($_POST['e_post']) and !empty($_POST['e_add'])  and !empty($_POST['e_salary']) and !empty($_POST['e_iban']) and !empty($_POST['brand'])) {
-    try {
+        try {
         $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
+
     $salary = (double)$_POST['e_salary'];
     $phone = (int)$_POST['e_phone'];
     $plz = (int)$_POST['e_post'];

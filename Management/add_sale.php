@@ -86,7 +86,7 @@ if (!empty($_POST['selected_product']) and !empty($_POST['selected_client']) and
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
 
     if ($_POST['submit'] == 'save') {
         $quant = (int)$_POST['quantity'];

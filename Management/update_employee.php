@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
     $id = $_GET['id'];
 
     $stmt = $handler->prepare("Select * FROM Mitarbeiter where m_id =" . $_GET['id']);
@@ -115,12 +115,12 @@ if (isset($_GET['id'])) {
 <?php
 if (isset($_POST['submit'])) {
     if ($_POST['submit'] == 'update') {
-        try {
-            $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
-        } catch (Exception $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+    try {
+        $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
+    } catch (Exception $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    };
         $salary = (double)$_POST['e_salary'];
         $phone = (int)$_POST['e_phone'];
         $plz = (int)$_POST['e_post'];

@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
     $id = $_GET['id'];
 
     $stmt = $handler->prepare("Select * FROM Kunde where k_id =" . $_GET['id']);
@@ -84,12 +84,12 @@ if (isset($_GET['id'])) {
 <?php
 if (isset($_POST['submit'])) {
     if ($_POST['submit'] == 'update') {
-        try {
-            $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
-        } catch (Exception $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+    try {
+        $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
+    } catch (Exception $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    };
         $card = (int)$_POST['c_card'];
         $phone = (int)$_POST['c_phone'];
         $plz = (int)$_POST['c_post'];
@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
             echo "<script type='text/javascript'>alert('$alert');</script>";
         }
     } else if ($_POST['submit'] == 'back') {
-        header("Location: logged_in.php");
+        header("Location: logged_in.php?choice=8");
     }
 }
 ?>

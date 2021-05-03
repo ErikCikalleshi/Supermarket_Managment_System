@@ -15,12 +15,12 @@
         </thead>
         <tbody>
         <?php
-        try {
-            $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
-        } catch (Exception $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+    try {
+        $handler = new PDO('mysql:dbname=supermarket;host=localhost', 'root', '');
+    } catch (Exception $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    };
 
         $sql = $handler->prepare('select *, sum(p_preis * v_menge) as "Total Cost" from Kunde, Verkauft, Produkt, Filiale where f_k_id = Kunde.k_id and f_p_id = Produkt.p_id and f_f_id = Filiale.f_id group by v_id');
         $sql->execute();

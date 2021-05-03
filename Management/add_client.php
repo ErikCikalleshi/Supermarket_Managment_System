@@ -52,7 +52,7 @@ if (!empty($_POST['c_name']) and !empty($_POST['c_sur']) and !empty($_POST['c_ph
     } catch (Exception $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
-    }
+    };
     $card = (int)$_POST['c_card'];
     $phone = (int)$_POST['c_phone'];
     $plz = (int)$_POST['c_post'];
