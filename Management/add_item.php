@@ -18,18 +18,17 @@
                    aria-describedby="basic-addon1" required>
         </div>
         <div class="input-group mb-3">
-            <select class="form-select" aria-label="Default select example" name="type" style="width: 100%">
-                <option selected>Select Type</option>
+            <select class="form-select" aria-label="Default select example" name="type" style="width: 100%" required>
+                <option>Select Type</option>
                 <option value="Vegetables">Vegetables</option>
                 <option value="Fruits">Fruits</option>
-                <option value="Grains, legumes, nuts and seeds">Grains, legumes, nuts and seeds</option>
-                <option value="Meat and poultry">Meat and poultry</option>
-                <option value="Fish and seafood">Fish and seafood</option>
+                <option value="Meat and poultry">Meat</option>
+                <option value="Fish and seafood">Fish</option>
                 <option value="Eggs">Eggs</option>
                 <option value="Beverages">Beverages</option>
-                <option value="Beer, Wine & Spiritss">Beer, Wine & Spiritss</option>
+                <option value="Alcohol">Alcohol</option>
                 <option value="Frozen Foods">Frozen Foods</option>
-                <option value="Bread & Bakery">Bread & Bakery</option>
+                <option value="Bread & Bakery">Bread</option>
                 <option value="Breakfast & Cereal">Breakfast & Cereal</option>
                 <option value="Cookies, Snacks & Candy">Cookies, Snacks & Candy</option>
                 <option value="Grains, Pasta & Sides">Grains, Pasta & Sides</option>
@@ -79,14 +78,8 @@ if (!empty($_POST['name']) and !empty($_POST['price']) and !empty($_POST['brand'
     $stmt->bindParam(':fileName', $param_img, PDO::PARAM_STR);
 
     if ($type == "image/jpg" || $type == "image/jpeg" || $type == "image/png" || $type == "image/gif") {
-        $alert = "drin";
-        echo "<script type='text/javascript'>alert('$alert');</script>";
         if ($width <= 800) {
-            $alert = "drin";
-            echo "<script type='text/javascript'>alert('$alert');</script>";
             if ($size < 5000000) {
-                $alert = "drin";
-                echo "<script type='text/javascript'>alert('$alert');</script>";
                 move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath);
                 $isImage = true;
             } else {
@@ -101,8 +94,6 @@ if (!empty($_POST['name']) and !empty($_POST['price']) and !empty($_POST['brand'
         $alert = "Format Image not supported";
         echo "<script type='text/javascript'>alert('$alert');</script>";
     }
-    $alert = "ausn";
-    echo "<script type='text/javascript'>alert('$alert');</script>";
 
     $param_name = $_POST["name"];
     $param_type = $_POST["type"];
@@ -112,8 +103,7 @@ if (!empty($_POST['name']) and !empty($_POST['price']) and !empty($_POST['brand'
     $param_img = $fileName;
 
     if ($isImage) {
-        $alert = "drin";
-        echo "<script type='text/javascript'>alert('$alert');</script>";
+
         if ($stmt->execute()) {
             $alert = "Your Item was added";
             echo "<script type='text/javascript'>alert('$alert');</script>";

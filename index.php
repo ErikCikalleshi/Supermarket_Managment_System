@@ -1,48 +1,93 @@
-<!doctype html>
+<?php
+    session_start();
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Yummy-Online-Shop</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"/>
+    <!-- Google Fonts Roboto -->
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css"/>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <title>Hello, world!</title>
 </head>
 <body>
-<div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- Background image -->
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php?choice=1">Home</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarExample01"
+                    aria-controls="navbarExample01"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php?choice=2">Sign in</a>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" aria-current="page" href="index.php?sort=all&choice=51">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php?choice=3">Login</a>
+                </ul>
+                <ul class="navbar-nav d-flex flex-row">
+                    <li class="nav-item me-3 me-lg-0 dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                id="navbarDropdown"
+                                role="button"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <ul class=" dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="index.php?choice=3">Login</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="index.php?choice=2">Register</a>
+                            </li>
+                            <?php
+                                if (isset($_SESSION['userloggedin'])) {
+                                    echo '<li> <a class="dropdown-item" href="index.php?choice=52">Log Out</a> </li>';
+                                }
+                            ?>
+
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About Us</a>
+                    <!-- Icons -->
+                    <li class="nav-item me-3 me-lg-0">
+                        <a class="nav-link" href="index.php?choice=53">
+                            <span class="badge badge-pill bg-danger">1</span>
+                            <span><i class="fas fa-shopping-cart"></i></span>
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-</div>
+    <!-- Navbar -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
 
+</header>
 <?php
 if (!isset($_GET['choice'])) {
-    include "supermarket.php";
+    header( "Location: index.php?sort=all&choice=51");
 }
 if (!empty($_GET['choice'])) {
     if ($_GET['choice'] == 3) {
@@ -51,7 +96,14 @@ if (!empty($_GET['choice'])) {
         include "sign_in.php";
     } else if ($_GET['choice'] == 1) {
         include "supermarket.php";
+    } else if ($_GET['choice'] == 51) {
+        include "display.php";
+    }else if ($_GET['choice'] == 52) {
+        include "logOut.php";
+    }else if ($_GET['choice'] == 53) {
+        include "checkout.php";
     }
+    
 }
 if (isset($_POST["login"])) {
     if (empty($_POST["username"]) && empty($_POST["password"])) {

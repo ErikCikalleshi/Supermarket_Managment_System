@@ -65,6 +65,7 @@
         if($stmt->execute()){
             $alert = "Your account has been created.";
             echo "<script type='text/javascript'>alert('$alert');</script>";
+            header("location: index.php?choice=51");
         } else{
             $alert = "I am sorry! There was some error. Try again please.";
             echo "<script type='text/javascript'>alert('$alert');</script>";

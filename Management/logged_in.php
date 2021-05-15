@@ -81,7 +81,7 @@ $choice = "0"
                     <a class="nav-link active" aria-current="page" href="logged_in.php?choice=10">Change Password</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="logOut.php">Log Out</a>
+                    <a class="nav-link active" href="../logOut.php">Log Out</a>
                 </li>
             </ul>
         </div>
