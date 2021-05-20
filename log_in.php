@@ -42,19 +42,15 @@ if (!empty($_POST['username']) and !empty($_POST['pass'])) {
     $hashed_pass = $row['b_pass'];
     //if password is correct with the hashed than start session and redirect to the logged screen
     if (password_verify($_POST['pass'], $hashed_pass) && $_POST['username'] == 'admin') {
-
         $_SESSION['userloggedin'] = true;
         $_SESSION['id'] = $id;
-        //header("Location: Management/logged_in.php?choice=21");
-        header("location: index.php?choice=51");
+        header("Location: Management/logged_in.php?choice=21");
 
     } else if (password_verify($_POST['pass'], $hashed_pass)){
-        //session_start();
         $_SESSION['userloggedin'] = true;
         $_SESSION['id'] = $id;
         header("location: index.php?choice=51");
     }  else {
-
         $alert = "Something went wrong. Please Try Again.";
         echo "<script type='text/javascript'>alert('$alert');</script>";
     }

@@ -1,5 +1,6 @@
 <?php
     session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,9 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>Yummy-Online-Shop</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- MDB icon -->
     <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon"/>
     <!-- Font Awesome -->
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"/>
     <!-- Google Fonts Roboto -->
     <link
@@ -22,8 +25,6 @@
 
 </head>
 <body>
-<!-- Background image -->
-<header>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
         <div class="container-fluid">
@@ -51,7 +52,6 @@
                                 id="navbarDropdown"
                                 role="button"
                                 data-mdb-toggle="dropdown"
-                                aria-expanded="false"
                         >
                             <i class="fas fa-user"></i>
                         </a>
@@ -73,7 +73,14 @@
                     <!-- Icons -->
                     <li class="nav-item me-3 me-lg-0">
                         <a class="nav-link" href="index.php?choice=53">
-                            <span class="badge badge-pill bg-danger">1</span>
+                            <span class="badge badge-pill bg-danger" id="n_shopping_cart">
+                                <?php
+                                $cookie_data = stripslashes($_COOKIE['shopping_cart']);
+                                $cart_data = json_decode($cookie_data, true);
+                                echo count($cart_data);
+                                //echo '<script>window.location.reload()</script>'
+                                ?>
+                            </span>
                             <span><i class="fas fa-shopping-cart"></i></span>
                         </a>
                     </li>
@@ -81,10 +88,8 @@
             </div>
         </div>
     </nav>
+
     <!-- Navbar -->
-
-
-</header>
 <?php
 if (!isset($_GET['choice'])) {
     header( "Location: index.php?sort=all&choice=51");
@@ -118,5 +123,8 @@ if (isset($_POST["login"])) {
     }
 }
 ?>
+
+
 </body>
+
 </html>
