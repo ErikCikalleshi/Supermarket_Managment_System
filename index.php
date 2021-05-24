@@ -42,7 +42,7 @@
             <div class="collapse navbar-collapse" id="navbarExample01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" aria-current="page" href="index.php?sort=all&choice=51">Home</a>
+                        <a class="nav-link" aria-current="page" href="index.php?sort=all&type=all&choice=51">Home</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav d-flex flex-row">
@@ -97,7 +97,7 @@
     <!-- Navbar -->
 <?php
 if (!isset($_GET['choice'])) {
-    header( "Location: index.php?sort=all&choice=51");
+    header( "Location: index.php?sort=all&type=all&choice=51");
 }
 if (!empty($_GET['choice'])) {
     if ($_GET['choice'] == 3) {

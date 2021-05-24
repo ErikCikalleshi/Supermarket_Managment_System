@@ -217,13 +217,8 @@
                       <!--  <div id="paypal-button" style="margin-left: 20px"></div>
                         <script src="https://www.paypalobjects.com/api/checkout.js"></script>-->
                         <form action="call.php" method="post">
-                            <input type="image" name="submit"
-                                   src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
-                                   alt="PayPal - The safer, easier way to pay online" id="pay" onclick="self.close()">
-                            <img alt="" width="1" height="1"
-                                 src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+                            <button type="submit" class="btn btn-rounded bt btn-primary btn-block btn-lg"><i class="fab fa-lg fa-paypal pr-6 pr" aria-hidden="true"></i> Paypal</button>
                         </form>
-
 
                         <script>
 

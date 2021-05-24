@@ -14,7 +14,7 @@
     <p class="lead"><strong>Please close this page or go back to the page</strong></p>
     <hr>
     <p class="lead">
-        <a class="btn btn-primary btn-sm" href="http://localhost:81/test/Final/index.php?sort=all&choice=51" role="button" id="click">Continue to homepage</a>
+        <a class="btn btn-primary btn-sm" href="http://localhost:81/test/Final/index.php?sort=all&type=all&choice=51" role="button" id="click">Continue to homepage</a>
     </p>
 </div>
 <script>
@@ -22,7 +22,7 @@
         <?php
             setcookie("shopping_cart", "", time() - 3600);
         ?>
-        window.location.href = "http://localhost:81/test/Final/index.php?sort=all&choice=51";
+        window.location.href = "http://localhost:81/test/Final/index.php?sort=all&type=all&choice=51";
 
     }
 </script>
