@@ -75,9 +75,14 @@
                         <a class="nav-link" href="index.php?choice=53">
                             <span class="badge badge-pill bg-danger" id="n_shopping_cart">
                                 <?php
-                                $cookie_data = stripslashes($_COOKIE['shopping_cart']);
-                                $cart_data = json_decode($cookie_data, true);
-                                echo count($cart_data);
+                                if(isset($_COOKIE['shopping_cart'])){
+                                    $cookie_data = stripslashes($_COOKIE['shopping_cart']);
+                                    $cart_data = json_decode($cookie_data, true);
+                                    echo count($cart_data);
+                                }else {
+                                    echo '0';
+                                }
+
                                 //echo '<script>window.location.reload()</script>'
                                 ?>
                             </span>
@@ -106,7 +111,7 @@ if (!empty($_GET['choice'])) {
     }else if ($_GET['choice'] == 52) {
         include "logOut.php";
     }else if ($_GET['choice'] == 53) {
-        include "checkout.php";
+        include "views/checkout.php";
     }
     
 }

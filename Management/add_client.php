@@ -1,9 +1,11 @@
+
 <div class="box2">
+    <h5>Function temporarily disabled - <br> Client is automatically added during the payment with PayPal</h5>
     <form action="logged_in.php?choice=7" method="post">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Client Name</span>
             <input type="text" class="form-control" name="c_name"
-                       aria-describedby="basic-addon1" required>
+                       aria-describedby="basic-addon1" disabled>
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Client Surname</span>
@@ -14,32 +16,32 @@
         <div class="input-group mb-2" id="qua">
             <span class="input-group-text" id="basic-addon1">Phone</span>
             <input type="text" class="form-control" name="c_phone"
-                   aria-describedby="basic-addon1" required>
+                   aria-describedby="basic-addon1" disabled>
         </div>
 
 
         <div class="input-group mb-3" id="bra">
             <span class="input-group-text" id="basic-addon1">Email</span>
             <input type="text" class="form-control" name="c_email"
-                   aria-describedby="basic-addon1" required>
+                   aria-describedby="basic-addon1" disabled>
         </div>
         <div style="clear: both"></div>
         <div class="input-group mb-3" id="qua">
             <span class="input-group-text" id="basic-addon1">Address</span>
             <input type="text" class="form-control" name="c_add"
-                   aria-describedby="basic-addon1" required>
+                   aria-describedby="basic-addon1" disabled>
         </div>
 
         <div class="input-group mb-3" id="bra">
             <span class="input-group-text">Post Code</span>
             <input type="text" class="form-control" name="c_post"
-                   aria-describedby="basic-addon1" required>
+                   aria-describedby="basic-addon1" disabled>
         </div>
 
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Credit card</span>
             <input type="text" class="form-control" name="c_card"
-                   aria-describedby="basic-addon1" required>
+                   aria-describedby="basic-addon1" disabled>
         </div>
         <button type="submit" class="btn btn-primary" name="submit" value="save" style="margin-top: 10px">Save</button>
     </form>

@@ -22,7 +22,7 @@
         die();
     };
 
-        $sql = $handler->prepare('select *, sum(p_preis * v_menge) as "Total Cost" from Kunde, Verkauft, Produkt, Filiale where f_k_id = Kunde.k_id and f_p_id = Produkt.p_id and f_f_id = Filiale.f_id group by v_id');
+        $sql = $handler->prepare('select *, ROUND(sum(p_preis * v_menge),2) as "Total Cost" from Kunde, Verkauft, Produkt, Filiale where f_k_id = Kunde.k_id and f_p_id = Produkt.p_id and f_f_id = Filiale.f_id group by v_id');
         $sql->execute();
         while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr>";

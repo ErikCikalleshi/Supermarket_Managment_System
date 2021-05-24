@@ -38,6 +38,10 @@
             $sql = $handler->prepare(" delete from Mitarbeiter where m_id = :id");
             $sql->bindParam(":id", $id);
             $choice = 2;
+        }else if($_GET['action'] == "delivery_addr") {
+            $sql = $handler->prepare(" delete from Kunde_Adresse where f_kl_id = :id");
+            $sql->bindParam(":id", $id);
+            $choice = 8;
         }
         if ($sql->execute()) {
             $alert = "Removed";

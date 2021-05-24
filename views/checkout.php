@@ -9,6 +9,7 @@
     if(isset($_GET['action2'])) {
 
         if ($_GET['action2'] == 'addSub') {
+            echo "<script>alert('dr');</script>";
             $cookie_data = stripslashes($_COOKIE['shopping_cart']);
             $cart_data = json_decode($cookie_data, true);
             foreach($cart_data as $keys => $values) {
@@ -25,7 +26,7 @@
             }
             $item_data = json_encode($cart_data);
             setcookie('shopping_cart', $item_data, time() + (86400 * 30));
-            header('Location: index.php?choice=53');
+
         }else if($_GET['action2'] == 'delete'){
             $cookie_data = stripslashes($_COOKIE['shopping_cart']);
             $cart_data = json_decode($cookie_data, true);
@@ -38,7 +39,7 @@
                 }
             }
         }
-
+        header('Location: index.php?choice=53');
     }
 
     $count = 0;
@@ -61,14 +62,20 @@
                     <div class="card-body">
 
                         <h5 class="mb-4">Cart (<span><?php
-                                $cookie_data = stripslashes($_COOKIE['shopping_cart']);
-                                $cart_data = json_decode($cookie_data, true);
-                                echo count($cart_data);
+                                if(isset($_COOKIE['shopping_cart'])){
+                                    $cookie_data = stripslashes($_COOKIE['shopping_cart']);
+                                    $cart_data = json_decode($cookie_data, true);
+                                    echo count($cart_data);
+                                }else{
+                                    echo "0";
+                                }
+
                                 //echo '<script>window.location.reload()</script>'
                                 ?></span> items)</h5>
                         <?php
                         if(!empty($_COOKIE["shopping_cart"])) {
                             $total = 0;
+                            $counter = 0;
                             $cookie_data = stripslashes($_COOKIE['shopping_cart']);
                             $cart_data = json_decode($cookie_data, true);
                             foreach ($cart_data as $keys => $values){
@@ -76,6 +83,7 @@
                                 $sql->execute();
                                 while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
                                     if ($values["item_id"] == $result['p_id']){
+                                        $counter++;
                                         $imagePath = $dir . $result['p_image'];
                                         echo
                                             '<div class="row mb-4">
@@ -93,7 +101,7 @@
                                                                 <div class="def-number-input number-input safari_only mb-0 w-100">
                                                                   
                                                                    <button type="button" class="addBtn" id="'.$values['item_id'].'" value="'.$values['item_id'].'">+</button> 
-                                                                    <small id="passwordHelpBlock" class="form-text text-muted text-center">'.$values["item_quantity"].' Piece/s</small>
+                                                                    <small id="quantity'.$counter.'" class="form-text text-muted text-center">'.$values["item_quantity"].' Piece/s</small>
                                                                    <button type="button" class="subBtn" id="'.$values['item_id'].'" value="'.$values['item_id'].'" ">-</button> 
                                                                    
                                                                   
@@ -135,12 +143,11 @@
                 <div class="card mb-4">
                     <div class="card-body">
 
-                        <h5 class="mb-4">We accept</h5>
+                        <h5 class="mb-4">PayPal accepts</h5>
 
                         <img class="mr-2" src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa" width="45px">
                         <img class="mr-2" src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express" width="45px">
                         <img class="mr-2" src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard" width="45px">
-                        <img class="mr-2" src="https://z9t4u9f6.stackpathcdn.com/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.png" alt="PayPal acceptance mark" width="45px">
                     </div>
                 </div>
                 <!-- Card -->
@@ -158,19 +165,27 @@
                         <h5 class="mb-3">The total amount of</h5>
 
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                Temporary amount
-                                <span><?php
-                                    $cookie_data = stripslashes($_COOKIE['shopping_cart']);
-                                    $cart_data = json_decode($cookie_data, true);
-                                    $total_amount = 0;
-                                    foreach($cart_data as $keys => $values) {
-                                        $total_amount += $values['item_quantity'] * $values['item_price'];
-                                    }
-                                    echo number_format($total_amount, 2)
+                            <?php
+                            if(isset($_COOKIE['shopping_cart'])){
+                                $cookie_data = stripslashes($_COOKIE['shopping_cart']);
+                                $cart_data = json_decode($cookie_data, true);
+                                $total_amount = 0;
+                                foreach($cart_data as $keys => $values) {
                                     ?>
-                                    €</span>
-                            </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        <?php echo $values['item_name'].'   '. $values['item_quantity']. 'x' ?>
+                                        <span>
+                                        <?php echo $values['item_quantity'] * $values['item_price'] ?>€</span>
+                                    </li>
+
+
+                            <?php
+                                //$total_amount += $values['item_quantity'] * $values['item_price'];
+                            }
+                            }else {
+                                echo "0";
+                            }
+                            ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 Shipping
                                 <span>Gratis</span>
@@ -182,92 +197,74 @@
                                         <p class="mb-0">(including IVA)</p>
                                     </strong>
                                 </div>
-                                <span><strong><?php
-                                        $cookie_data = stripslashes($_COOKIE['shopping_cart']);
-                                        $cart_data = json_decode($cookie_data, true);
-                                        $total_amount = 0;
-                                        foreach($cart_data as $keys => $values) {
-                                            $total_amount += $values['item_quantity'] * $values['item_price'];
+                                <span id="price"><strong><?php
+                                        if(isset($_COOKIE['shopping_cart'])) {
+                                            $cookie_data = stripslashes($_COOKIE['shopping_cart']);
+                                            $cart_data = json_decode($cookie_data, true);
+                                            $total_amount = 0;
+                                            foreach ($cart_data as $keys => $values) {
+                                                $total_amount += $values['item_quantity'] * $values['item_price'];
+                                            }
+                                            echo number_format($total_amount, 2);
+                                        }else{
+                                            echo '0.00';
                                         }
-                                        echo number_format($total_amount, 2)
-                                        ?>€</strong></span>
+                                        ?>€
+
+                                       </strong></span>
                             </li>
                         </ul>
+                      <!--  <div id="paypal-button" style="margin-left: 20px"></div>
+                        <script src="https://www.paypalobjects.com/api/checkout.js"></script>-->
+                        <form action="call.php" method="post">
+                            <input type="image" name="submit"
+                                   src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
+                                   alt="PayPal - The safer, easier way to pay online" id="pay" onclick="self.close()">
+                            <img alt="" width="1" height="1"
+                                 src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+                        </form>
 
-                        <div id="paypal-button" style="margin-left: 20px"></div>
-                        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
                         <script>
-                            paypal.Button.render({
-                                // Configure environment
-                                env: 'sandbox',
-                                client: {
-                                    sandbox: 'AZ1IItdvQng9nIs3tiyJ2xVIgzeaM0eFs_Or9u2nZrkC76rZ-xU5yRenGA5NYY4dn1T3qeU5pIxq5ETZ',
-                                    production: 'demo_production_client_id'
-                                },
-                                // Customize button (optional)
-                                locale: 'en_US',
-                                style: {
-                                    size: 'large',
-                                    color: 'blue',
-                                    shape: 'pill',
-                                },
 
-                                // Enable Pay Now checkout flow (optional)
-                                commit: true,
+                                //var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+                                /*xmlhttp.send(JSON.stringify({
+                                     "intent": "sale",
+                                     "payer": {
+                                         "payment_method": "paypal"
+                                     },
+                                     "redirect_urls": {
+                                         "return_url": "http://localhost:3000/success",
+                                         "cancel_url": "http://localhost:3000/cancel"
+                                     },
+                                     "transactions": [{
+                                         "item_list": {
+                                             "items": [{
+                                                 "name": "Red Sox",
+                                                 "sku": "001",
+                                                 "price": "25.00",
+                                                 "currency": "USD",
+                                                 "quantity": 1
+                                             }]
+                                         },
+                                         "amount": {
+                                             "currency": "USD",
+                                             "total": "25.00"
+                                         },
+                                         "description": "This is the payment description."
+                                     }]}));
+                             }*/
 
-                                // Set up a payment
-                                payment: function(data, actions) {
-                                    return actions.payment.create({
-                                        transactions: [{
-                                            amount: {
-                                                total: <?php
-                                                $cookie_data = stripslashes($_COOKIE['shopping_cart']);
-                                                $cart_data = json_decode($cookie_data, true);
-                                                $total_amount = 0;
-                                                foreach($cart_data as $keys => $values) {
-                                                    $total_amount += $values['item_quantity'] * $values['item_price'];
-                                                }
-                                                    echo number_format($total_amount, 2)
-                                                ?> ,
-                                                currency: 'EUR'
-                                            }
-                                        }]
-                                    });
-                                },
-                                // Execute the payment
-                                onAuthorize: function(data, actions) {
-                                    return actions.payment.execute().then(function() {
-                                        // Show a confirmation message to the buyer
-                                        console.log(data)
-                                    });
-                                }
-                            }, '#paypal-button');
 
                         </script>
 
+
+
                     </div>
                 </div>
                 <!-- Card -->
 
-                <!-- Card -->
-                <div class="card mb-4">
-                    <div class="card-body">
 
-                        <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            Add a discount code (optional)
-                            <span><i class="fas fa-chevron-down pt-1"></i></span>
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <div class="mt-3">
-                                <div class="md-form md-outline mb-0">
-                                    <input type="text" id="discount-code" class="form-control font-weight-light" placeholder="Enter discount code">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card -->
 
             </div>
             <!--Grid column-->
@@ -319,6 +316,18 @@
         document.body.appendChild(form)
         form.submit();
 
+        /*var httpc = new XMLHttpRequest(); // simplified for clarity
+        var url = 'index.php?choice=53&action2=addSub&id='+id + '&op='+ op;
+        httpc.open("POST", url, true); // sending as POST
+        httpc.onreadystatechange = function() { //Call a function when the state changes.
+            if(httpc.readyState == 4 && httpc.status == 200) { // complete and no errors
+                for (let i = 1; i <= <?php echo $counter ?>; i++) {
+                    $("#quantity"+i).load(" #quantity"+i);
+                }
+                $("#price").load(" #price");
+            }
+        };
+        httpc.send();*/
     }
 
 </script>

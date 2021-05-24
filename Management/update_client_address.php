@@ -26,36 +26,38 @@ if (isset($_GET['id'])) {
     };
     $id = $_GET['id'];
 
-    $stmt = $handler->prepare("Select * FROM Kunde where k_id =" . $_GET['id']);
+    $stmt = $handler->prepare("Select * FROM Lieferadresse where kl_id =" . $_GET['id']);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 ?>
 
 <div class="box2">
-    <form action=<?php echo "update_client.php?id=" . $id ?> method="post">
+    <form action=<?php echo "update_client_address.php?id=" . $id ?> method="post">
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Client Name</span>
-            <input type="text" class="form-control" name="c_name"
-                   aria-describedby="basic-addon1" value="<?php echo $result['k_vorname'] ?>" disabled>
+            <span class="input-group-text" id="basic-addon1">Current Delivery Address</span>
+            <input type="text" class="form-control" name="address"
+                   aria-describedby="basic-addon1" value="<?php echo $result['kl_adresse'] ?>" disabled>
         </div>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Client Surname</span>
-            <input type="text" class="form-control" name="c_sur"
-                   aria-describedby="basic-addon1" value="<?php echo $result['k_nachname'] ?>" disabled>
+            <span class="input-group-text" id="basic-addon1">City</span>
+            <input type="text" class="form-control" name="city"
+                   aria-describedby="basic-addon1" value="<?php echo $result['kl_stadt'] ?>" disabled>
         </div>
 
-        <div class="input-group mb-3" >
-            <span class="input-group-text" id="basic-addon1">PayPal Payer Id</span>
-            <input type="text" class="form-control" name="c_paypal"
-                   aria-describedby="basic-addon1" value="<?php echo $result['k_payer_id'] ?>" disabled>
+        <div class="input-group mb-2" id="qua">
+            <span class="input-group-text" id="basic-addon1">Postal Code</span>
+            <input type="text" class="form-control" name="plz"
+                   aria-describedby="basic-addon1" value="<?php echo $result['kl_plz'] ?>" disabled>
         </div>
 
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Email</span>
-            <input type="text" class="form-control" name="c_card"
-                   aria-describedby="basic-addon1" value="<?php echo $result['k_email'] ?>" disabled>
+
+        <div class="input-group mb-3" id="bra">
+            <span class="input-group-text" id="basic-addon1">Country</span>
+            <input type="text" class="form-control" name="cc"
+                   aria-describedby="basic-addon1" value="<?php echo $result['kl_country_code'] ?>" disabled>
         </div>
+        <div style="clear: both"></div>
         <button type="submit" class="btn btn-primary" name="submit" value="update" style="margin-top: 10px">Update
         </button>
         <button type="submit" class="btn btn-primary" name="submit" value="back" style="margin-top: 10px">Back</button>
@@ -71,22 +73,24 @@ if (isset($_POST['submit'])) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
     };
-        $paypal = (int)$_POST['c_paypal'];
-        $sql = "update Kunde set k_vorname = :c_name, k_nachname = :c_sur, k_payer_id = :paypal, k_email = c_email where k_id =" . $id;
-
+        $city = $_POST['city'];
+        $addr = $_POST['address'];
+        $country = $_POST['cc'];
+        $plz = (int)$_POST['plz'];
+        $sql = "update Lieferadresse set kl_plz = :plz, kl_stadt = :city, kl_country_code = :country, kl_adresse = :addr where kl_id =" . $id;
         $stmt = $handler->prepare($sql);
-        $stmt->bindParam(':c_name', $param_name, PDO::PARAM_STR);
-        $stmt->bindParam(':c_sur', $param_surname, PDO::PARAM_STR);
-        $stmt->bindParam(':paypal', $param_paypal, PDO::PARAM_INT);
-        $stmt->bindParam(':c_email', $param_email, PDO::PARAM_STR);
+        $stmt->bindParam(':plz', $param_plz, PDO::PARAM_INT);
+        $stmt->bindParam(':city', $param_city, PDO::PARAM_STR);
+        $stmt->bindParam(':country', $param_country, PDO::PARAM_STR);
+        $stmt->bindParam(':addr', $param_addr, PDO::PARAM_STR);
 
-        $param_name = $_POST['c_name'];
-        $param_surname = $_POST['c_sur'];
-        $paypal = (int)$_POST['c_paypal'];
-        $param_email = $_POST['c_email'];
+        $param_plz = (int)$_POST['plz'];
+        $param_city = $_POST['city'];
+        $param_country = $_POST['cc'];
+        $param_addr = $_POST['address'];
 
         if ($stmt->execute()) {
-            $alert = "Your Client was updated";
+            $alert = "Your Clients Delivery Info was updated";
             echo "<script type='text/javascript'>alert('$alert');</script>";
         } else {
             $alert = "I am sorry! There was some error. Try again please.";
